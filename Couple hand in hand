@@ -1,0 +1,42 @@
+func minSwapsCouples(row []int) int {
+	//define 0 is wife
+	//define i is husband
+	count:=0
+	position:=make([]int,len(row))
+	for x,y:=range row{
+		position[y]=x
+	}
+	for x:=0;x<=len(row)-2;x+=2 {
+		//two person is couple
+		if int(row[x]/2)==int(row[x+1]/2){
+                continue
+		}
+		//not couple
+		  xx:=x
+		  for int(row[xx]/2)!=int(row[xx+1]/2) {
+			  if row[xx]%2 == 0 {
+				  a := row[xx]
+				  //c is husband's position
+				  c := position[a+1]
+				  row[xx+1], row[c] = row[c], row[xx+1]
+				  if c%2==0{
+					 xx=c
+				  }else{
+				  	xx=c-1
+				  }
+			  } else {
+				  a := row[xx]
+				  //c is wife's position
+				  c := position[a-1]
+				  row[xx+1], row[c] = row[c], row[xx+1]
+				  if c%2==0{
+					  xx=c
+				  }else{
+					  xx=c-1
+				  }
+			  }
+			  count++
+		  }
+	}
+    return count
+}

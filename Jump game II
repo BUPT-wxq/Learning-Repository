@@ -1,0 +1,40 @@
+给定一个非负整数数组，你最初位于数组的第一个位置。
+
+数组中的每个元素代表你在该位置可以跳跃的最大长度。
+
+你的目标是使用最少的跳跃次数到达数组的最后一个位置。
+
+示例:
+
+输入: [2,3,1,1,4]
+输出: 2
+解释: 跳到最后一个位置的最小跳跃数是 2。
+     从下标为 0 跳到下标为 1 的位置，跳 1 步，然后跳 3 步到达数组的最后一个位置。
+
+func jump(nums []int) int {
+	//step is return
+	step:=0
+	position:=0
+	//current position is less than last position
+	for position<len(nums)-1{
+		//default max
+		max:=nums[position]+position
+		maxarrive:=nums[position]+position
+		//confirm whether need traverse next elements
+		if max<len(nums)-1 {
+			for i := position + 1; i <= maxarrive && i < len(nums); i++ {
+				//find a farthest position
+				if nums[i]+i >= max {
+					max = nums[i] + i
+					//next loop position is i
+					position = i
+				}
+			}
+		}else {
+			//direct to last
+			position=max
+		}
+		step++
+	}
+	return step
+}
